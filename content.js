@@ -34,7 +34,7 @@ var myPort = chrome.runtime.connect();
 var numSlides = getSlides().length;
 myPort.onMessage.addListener(function(msg) {
   if (msg.next_slide) {
-    alert("next slide message received");
+    // alert("next slide message received");
     if (msg.index < numSlides) {
       nextSlide(msg.index);
       myPort.postMessage({capture_slide: true, index: msg.index});

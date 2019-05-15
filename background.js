@@ -2,17 +2,23 @@
 
 var activeTab, numSlides, myPort, id = 100, screenshots = [];
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function connected(p) {
   myPort = p;
-  myPort.onMessage.addListener(function(m) {
+  myPort.onMessage.addListener(async function(m) {
     if (m.capture_slide) {
-      chrome.tabs.captureVisibleTab(function(screenshotUrl) {
-        alert("capturing screenshot for slide " + m.index);
+      chrome.tabs.captureVisibleTab(async function(screenshotUrl) {
+        console.log("capturing screenshot for slide " + m.index);
+        await sleep(500)
         screenshots.splice(m.index, 0, screenshotUrl);
         myPort.postMessage({next_slide: true, index: (m.index+1)});
       });
     } else if (m.generate_slideshow) {
-      alert("About to capture " + screenshots.length + " slides");
+      console.log("About to capture " + screenshots.length + " slides");
+      await sleep(500)
       var viewTabUrl = chrome.extension.getURL('output.html?id=' + id++)
       var targetId = null;
       chrome.tabs.onUpdated.addListener(function listener(tabId, changedProps) {
