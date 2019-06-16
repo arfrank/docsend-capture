@@ -1,7 +1,7 @@
 {
   "name": "DocSend Capture",
   "version": "0.2.1",
-  "description": "Create Downloadable document from Docdsend",
+  "description": "Create Downloadable document from Docsend",
   "permissions": [
     "<all_urls>",
     "tabs"
